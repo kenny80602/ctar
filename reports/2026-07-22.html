@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>投資組合日報 2026-07-22</title>
-<script src="../js/gate.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
@@ -147,6 +146,17 @@ td.num.down strong,td.num.down{color:var(--down)}
 .pill.critical{background:color-mix(in srgb,var(--critical) 12%,transparent);color:var(--ink)}
 .pill.warning{background:color-mix(in srgb,var(--warning) 16%,transparent);color:var(--ink)}
 .pill.good{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--ink)}
+
+.assess{margin:0 0 18px;border:1px solid var(--border);border-radius:10px;
+  background:var(--plane);overflow:hidden}
+.assess-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+  padding:9px 13px;border-bottom:1px solid var(--rule);font-size:13.5px}
+.assess-row:last-child{border-bottom:0}
+.assess-k{flex:0 0 74px;color:var(--muted);font-size:12px}
+.assess-v{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+.assess-m{color:var(--muted);font-size:12px;flex:1 1 200px}
+.assess-m strong{color:var(--up)}
+.pill.serious{background:color-mix(in srgb,#ec835a 16%,transparent);color:var(--ink)}
 
 .footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);
   font-size:12.5px;color:var(--muted);line-height:1.8}
