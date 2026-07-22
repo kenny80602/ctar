@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>投資組合日報 2026-07-22</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  color-scheme:light;
+  --plane:#f9f9f7; --surface:#fcfcfb;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --rule:#e1e0d9; --border:rgba(11,11,11,.10);
+  --up:#d03b3b; --down:#0ca30c; --mag:#2a78d6;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  --track:#eceae4;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme=light])){
+    color-scheme:dark;
+    --plane:#0d0d0d; --surface:#1a1a19;
+    --ink:#fff; --ink-2:#c3c2b7; --muted:#898781;
+    --rule:#2c2c2a; --border:rgba(255,255,255,.10);
+    --up:#e66767; --down:#0ca30c; --mag:#3987e5;
+    --track:#2c2c2a;
+  }
+}
+:root[data-theme=dark]{
+  color-scheme:dark;
+  --plane:#0d0d0d; --surface:#1a1a19;
+  --ink:#fff; --ink-2:#c3c2b7; --muted:#898781;
+  --rule:#2c2c2a; --border:rgba(255,255,255,.10);
+  --up:#e66767; --down:#0ca30c; --mag:#3987e5;
+  --track:#2c2c2a;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--plane); color:var(--ink);
+  font:400 16px/1.75 system-ui,-apple-system,"PingFang TC","Noto Sans TC",sans-serif;
+  overflow-wrap:break-word;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 96px}
+
+/* 頂欄 */
+.topbar{
+  position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--plane) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--rule);
+}
+.topbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;
+  align-items:center;gap:12px;flex-wrap:wrap}
+.topbar strong{font-size:15px;font-weight:600;letter-spacing:.01em}
+.topbar .date{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.theme-btn{margin-left:auto;border:1px solid var(--border);background:var(--surface);
+  color:var(--ink-2);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;
+  font-family:inherit}
+.theme-btn:hover{color:var(--ink)}
+
+h1{font-size:29px;line-height:1.3;font-weight:650;letter-spacing:-.01em;margin:40px 0 8px}
+h2{font-size:21px;font-weight:650;margin:56px 0 18px;padding-bottom:9px;
+  border-bottom:1px solid var(--rule);scroll-margin-top:70px}
+h3{font-size:17px;font-weight:600;margin:32px 0 12px}
+p{margin:14px 0;color:var(--ink-2)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--mag)}
+hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+code{font:500 .87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:var(--track);padding:2px 5px;border-radius:4px;color:var(--ink)}
+blockquote{margin:20px 0;padding:14px 18px;background:var(--surface);
+  border:1px solid var(--border);border-left:3px solid var(--mag);
+  border-radius:0 8px 8px 0;color:var(--ink-2);font-size:14px;line-height:1.7}
+ul,ol{margin:14px 0;padding-left:1.35em;color:var(--ink-2)}
+li{margin:7px 0}
+li::marker{color:var(--muted)}
+ul ul{margin:7px 0}
+
+/* 導覽 */
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 8px}
+.nav a{font-size:13px;text-decoration:none;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--border);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--ink);border-color:var(--muted)}
+
+/* 概況 */
+.summary{margin:26px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:5px}
+.stat-value{font-size:25px;font-weight:600;line-height:1.2}
+.summary-note{font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+.summary-note strong{color:var(--ink-2)}
+
+/* 個股卡 */
+.stock{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px 22px;margin:22px 0;scroll-margin-top:70px}
+.stock-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.stock-head .symbol{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);background:var(--track);border-radius:6px;padding:3px 8px}
+.stock-head .name{font-size:19px;font-weight:650}
+.stock-head .market{font-size:11px;color:var(--muted);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px;text-transform:uppercase;letter-spacing:.04em}
+.stock-head .batch{font-size:13px;color:var(--muted)}
+.stock>ul{margin-top:4px}
+.stock>ul>li{margin:11px 0}
+
+/* flex 而非 grid：格數（8）除不盡欄數時，grid 會在末列留下空儲存格，
+   而空儲存格會露出容器底色變成一塊色塊。flex 的末列則自動撐滿。 */
+.tiles{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+/* max-width 防止落單的格子被拉成整列寬；剩餘空間留白即可，不會像 grid 那樣露出色塊 */
+.tile{flex:1 1 88px;max-width:190px;background:var(--plane);
+  border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.tile-label{font-size:11.5px;color:var(--muted);white-space:nowrap;margin-bottom:3px}
+.tile-value{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+.up{color:var(--up)} .down{color:var(--down)}
+.muted-val{color:var(--ink-2)} .warn-val{color:var(--warning)}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--border);
+  border-radius:12px;background:var(--surface);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:max-content}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;
+  border-bottom:1px solid var(--rule)}
+th{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;
+  background:var(--surface);position:sticky;top:0;z-index:1}
+/* 橫向捲動時保留識別欄——手機上捲到損益欄時仍看得到是哪一檔 */
+td:first-child,th:first-child{position:sticky;left:0;background:var(--surface);
+  z-index:2;box-shadow:1px 0 0 var(--rule)}
+th:first-child{z-index:3}
+tbody tr:last-child td{border-bottom:0}
+td{color:var(--ink-2)}
+td strong{color:var(--ink)}
+.right{text-align:right}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num.up strong,td.num.up{color:var(--up)}
+td.num.down strong,td.num.down{color:var(--down)}
+.bar-val{display:block}
+.bar-track{display:block;position:relative;height:5px;margin-top:5px;
+  min-width:78px;background:var(--track);border-radius:3px;overflow:hidden}
+.bar-fill{position:absolute;top:0;height:100%}
+.bar-fill.up{background:var(--up);border-radius:0 3px 3px 0}
+.bar-fill.down{background:var(--down);border-radius:3px 0 0 3px}
+.bar-fill.mag{background:var(--mag);border-radius:0 3px 3px 0}
+
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12.5px;
+  border:1px solid var(--border);white-space:nowrap}
+.pill.critical{background:color-mix(in srgb,var(--critical) 12%,transparent);color:var(--ink)}
+.pill.warning{background:color-mix(in srgb,var(--warning) 16%,transparent);color:var(--ink)}
+.pill.good{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--ink)}
+
+.footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--muted);line-height:1.8}
+
+/* 免責聲明。公開站點，必須在第一屏就看得到，不能只藏在頁尾 */
+.disclaimer{margin:22px 0 0;padding:13px 16px;border-radius:10px;
+  background:color-mix(in srgb,var(--warning) 10%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--warning) 38%,transparent);
+  font-size:13px;line-height:1.7;color:var(--ink-2)}
+.disclaimer strong{color:var(--ink)}
+.disclaimer .dtag{display:inline-block;font-weight:600;color:var(--ink);
+  margin-right:6px}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  .wrap{padding:0 15px 72px}
+  h1{font-size:24px;margin-top:28px} h2{font-size:19px;margin-top:42px}
+  .stock{padding:16px;border-radius:12px}
+  .stat-value{font-size:22px}
+  .table-wrap{border-radius:10px}
+  th,td{padding:9px 11px}
+}
+@media print{
+  .topbar,.nav,.theme-btn{display:none}
+  body{background:#fff;font-size:11pt}
+  .stock,.stat,.table-wrap{break-inside:avoid}
+  .wrap{max-width:none;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+<strong>投資組合日報</strong><span class="date">2026-07-22</span>
+<button class="theme-btn" id="theme" type="button">☾ 深色</button>
+</div></div>
+<div class="wrap">
+<p class="disclaimer"><span class="dtag">⚠ 免責聲明</span>本頁為<strong>個人技術測試用途</strong>，內容由程式自動抓取公開資料後產生，可能有錯誤、遺漏或延遲，且未經人工查核。所有數字僅供參考，<strong>不構成任何投資建議、要約或推薦</strong>。任何人依本頁內容所為之投資決策及其後果，均由行為人自行承擔，作者不負任何形式之法律責任。</p>
+<nav class="nav"><a href="#今日重點">今日重點</a><a href="#部位總覽">部位總覽</a><a href="#逐檔分析">逐檔分析</a><a href="#風險與觀察清單">風險與觀察清單</a><a href="#資料缺漏與註記">資料缺漏與註記</a></nav>
+<section class="summary"><div class="stats"><div class="stat"><div class="stat-label">部位</div><div class="stat-value ">11</div></div><div class="stat"><div class="stat-label">算術平均損益</div><div class="stat-value up">+35.17%</div></div><div class="stat"><div class="stat-label">跌破成本</div><div class="stat-value down">2</div></div><div class="stat"><div class="stat-label">回檔逾 20%</div><div class="stat-value warn-val">3</div></div></div><p class="summary-note">算術平均為 11 列成本的單純平均，未依股數加權，<strong>不等於實際帳戶報酬率</strong>。</p></section>
+
+<blockquote><strong>盤中快照（10:12）</strong>，<code>price</code>／<code>todayHigh</code>／<code>todayLow</code> 為即時價，非收盤價。<br>法人買賣超與估值資料為 <strong>2026-07-21</strong>（前一交易日）；營收為 <strong>2026-06</strong> 月報。<br>台股 13:30 收盤，本報告數字日後回看時請以此時點理解。</blockquote>
+<h2 id="今日重點">今日重點</h2>
+<ol>
+<li><strong>10 檔中有 5 檔在 2026 年度出現股本變動事項</strong>：技嘉（ECB 5 億美元已發行 + GDR 現增授權）、群聯（ECB 8 億美元已發行）、世界先進（限制員工權利新股已增資、ECB 轉換價下調）、智原（限制員工權利新股 400 萬股決議）、中美晶（股東會通過公開募集／私募授權）。<code>announcements</code> 區塊為空是因為封存尚未累積，<strong>不代表無增資</strong>——以下逐檔已用公開資訊逐一查證。</li>
+<li><strong>群聯（8299）是唯一跌破成本、且回檔最深的部位</strong>：現價 1,965 元 vs 成本 1,980 元（-0.76%），自 5/14 盤中高點 2,880 元回檔 31.77%。5/26 發行的 8 億美元 ECB 轉換價 3,418.75／3,555.50 元，已深度價外。市場正在用「NAND 循環高點已過」重新定價這檔股票。</li>
+<li><strong>智原（3035）6 月營收出現轉折訊號</strong>：單月 14.17 億元、月增 52.4%、年增 <strong>+26.5%</strong>，是連續多月年減後首度轉正，且超越法人共識預估 58.5%。但累計上半年營收年減仍達 50.6%，本益比 103.46 倍為全組合最高，是目前估值與獲利落差最大的一檔。</li>
+<li><strong>環球晶（6488）有實質長約利多但股價已回檔 21.56%</strong>：7/9 宣布美光提供 5 億美元策略性資金並規劃 10 年長期供應協議，7/13 漲停創天價 1,485 元；但目前 1,255 元已自 3 個月高點 1,600 元回檔逾兩成，外資 7/21 賣超 1,151 張。美光資金經查證屬<strong>預付款性質，非股權投資</strong>，不造成股本稀釋。</li>
+<li><strong>鴻海（2317）法人單日大幅買超 26,966 張</strong>（外資 +22,635 張、投信 +2,100 張），為全組合最大。同時 6 月營收 8,217.63 億元、年增 52.1%，上半年 4.64 兆元創新高——但股價自 6 月初 314 元高點已回檔 19.11%。</li>
+</ol>
+<h2 id="部位總覽">部位總覽</h2>
+<div class="table-wrap"><table><thead><tr><th class="left">代號</th><th class="left">名稱</th><th class="right">成本</th><th class="right">現價</th><th class="right">損益%</th><th class="right">回檔%</th><th class="right">本益比</th><th class="right">殖利率%</th><th class="right">法人淨買賣(張)</th></tr></thead><tbody><tr><td class="left">6488</td><td class="left">環球晶</td><td class="right num">550</td><td class="right num">1,255.0</td><td class="right num up"><span class="bar-val">+128.18</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:50.00%"></span></span></td><td class="right num"><span class="bar-val">21.56</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:67.86%"></span></span></td><td class="right num">74.34</td><td class="right num">0.64</td><td class="right num">-1,038.5</td></tr><tr><td class="left">3374</td><td class="left">精材</td><td class="right num">194.4</td><td class="right num">408.5</td><td class="right num up"><span class="bar-val">+110.13</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:42.96%"></span></span></td><td class="right num"><span class="bar-val">2.27</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:7.15%"></span></span></td><td class="right num">73.93</td><td class="right num">0.66</td><td class="right num">-2,061.1</td></tr><tr><td class="left">6196</td><td class="left">帆宣</td><td class="right num">357</td><td class="right num">549.0</td><td class="right num up"><span class="bar-val">+53.78</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:20.98%"></span></span></td><td class="right num"><span class="bar-val">9.56</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:30.09%"></span></span></td><td class="right num">34.39</td><td class="right num">1.19</td><td class="right num">+48.3</td></tr><tr><td class="left">5483</td><td class="left">中美晶（第一批）</td><td class="right num">175</td><td class="right num">238.0</td><td class="right num up"><span class="bar-val">+36.00</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:14.04%"></span></span></td><td class="right num"><span class="bar-val">14.85</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:46.74%"></span></span></td><td class="right num">31.32</td><td class="right num">1.59</td><td class="right num">-1,329.0</td></tr><tr><td class="left">5483</td><td class="left">中美晶（第二批）</td><td class="right num">215</td><td class="right num">238.0</td><td class="right num up"><span class="bar-val">+10.70</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:4.17%"></span></span></td><td class="right num"><span class="bar-val">14.85</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:46.74%"></span></span></td><td class="right num">31.32</td><td class="right num">1.59</td><td class="right num">-1,329.0</td></tr><tr><td class="left">2377</td><td class="left">微星</td><td class="right num">119</td><td class="right num">151.5</td><td class="right num up"><span class="bar-val">+27.31</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:10.65%"></span></span></td><td class="right num"><span class="bar-val">1.94</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:6.11%"></span></span></td><td class="right num">15.26</td><td class="right num">2.88</td><td class="right num">+2,664.8</td></tr><tr><td class="left">5347</td><td class="left">世界先進</td><td class="right num">147.5</td><td class="right num">171.0</td><td class="right num up"><span class="bar-val">+15.93</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:6.21%"></span></span></td><td class="right num"><span class="bar-val">23.32</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:73.40%"></span></span></td><td class="right num">37.47</td><td class="right num">2.88</td><td class="right num">-3,082.9</td></tr><tr><td class="left">8299</td><td class="left">群聯</td><td class="right num">1,980</td><td class="right num">1,965.0</td><td class="right num down"><span class="bar-val"><strong>-0.76</strong></span><span class="bar-track"><span class="bar-fill down" style="left:49.70%;width:0.30%"></span></span></td><td class="right num"><span class="bar-val">31.77</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:100.00%"></span></span></td><td class="right num">17.74</td><td class="right num">1.25</td><td class="right num">+207.0</td></tr><tr><td class="left">2317</td><td class="left">鴻海</td><td class="right num">230</td><td class="right num">254.0</td><td class="right num up"><span class="bar-val">+10.43</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:4.07%"></span></span></td><td class="right num"><span class="bar-val">19.11</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:60.15%"></span></span></td><td class="right num">17.47</td><td class="right num">2.91</td><td class="right num">+26,966.2</td></tr><tr><td class="left">3035</td><td class="left">智原</td><td class="right num">214.5</td><td class="right num">199.0</td><td class="right num down"><span class="bar-val"><strong>-7.23</strong></span><span class="bar-track"><span class="bar-fill down" style="left:47.18%;width:2.82%"></span></span></td><td class="right num"><span class="bar-val">18.78</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:59.11%"></span></span></td><td class="right num">103.46</td><td class="right num">0.93</td><td class="right num">+747.5</td></tr><tr><td class="left">2376</td><td class="left">技嘉</td><td class="right num">337</td><td class="right num">345.0</td><td class="right num up"><span class="bar-val">+2.37</span><span class="bar-track"><span class="bar-fill up" style="left:50%;width:0.92%"></span></span></td><td class="right num"><span class="bar-val">14.18</span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:44.63%"></span></span></td><td class="right num">15.93</td><td class="right num">3.52</td><td class="right num">-170.5</td></tr></tbody></table></div>
+<p><strong>整體加權損益：—</strong>（試算表未提供各批持股股數，無法計算金額加權損益）。<br>11 列成本的<strong>單純算術平均</strong>損益為 <strong>+35.17%</strong>，僅供參考，不等於實際帳戶報酬率。<br>中美晶兩批分列：第一批（成本 175）+36.00%、第二批（成本 215）+10.70%，法人數字為該代號當日合計，非分批數字。</p>
+<hr>
+<h2 id="逐檔分析">逐檔分析</h2>
+<section class="stock" id="6488-環球晶otc"><header class="stock-head"><span class="symbol">6488</span><span class="name">環球晶</span><span class="market">otc</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">550</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">1,255</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+128.18%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-21.56%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">74.34</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">0.64%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value down">-1.63%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-1,038.5 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 550 → 現價 1,255.0，損益 <strong>+128.18%</strong>；距 3 個月高點 1,600 元回檔 <strong>21.56%</strong>。今日區間 1,205.0～1,295.0（振幅約 7.5%，偏大）</li>
+<li><strong>估值</strong>：本益比 74.34、殖利率 0.64%、股價淨值比 6.17；每股股利 7.7 元</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>56.24 億元</strong>，月增 +16.16%、年增 <strong>-1.63%</strong>；累計年增 <strong>-7.60%</strong></li>
+<li><strong>籌碼</strong>：外資 -1,151.2 張、投信 -73.7 張，三大法人合計 -1,038.5 張</li>
+<li><strong>增資／股本變動</strong>：<strong>無</strong>。查 2026 年度公告，僅有營收公告、法說會通知、注意股公告與子公司資金貸與，未見現金增資、可轉債、私募或減資。7/9 美光提供的 5 億美元「策略性資金」經查證具<strong>預付款性質</strong>（綁定 10 年長約與保證採購量），<strong>非股權投資、不發行新股</strong></li>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>7/9 宣布與美光深化長期策略合作，美光提供 5 億美元支持美國擴產，規劃簽署 10 年期長期供應協議；7/13 開盤即鎖漲停 1,485 元創歷史新高，帶動中美晶、台勝科、嘉晶、合晶同步漲停</li>
+<li>Q1 法說會（5/5）：EPS 3.97 元，合併營收 139.85 億元（季減 3.6%、年減 10.3%），淨利 18.96 億元年增 30.2%；毛利率 20.8% 為近 23 季低點。董事長徐秀蘭表示將自 2026 下半年起嘗試調漲產品價格，以反映能源、地緣政治與擴產折舊（逾 120 億元）成本</li>
+<li>12 吋矽晶圓占比已達近三分之二、稼動率極高，現貨價預期上漲；8 吋與 6 吋供需漸緊但漲價空間相對有限</li>
+<li>7/20 公告召開 2026Q2 英文線上法說會</li>
+</ul>
+<li><strong>觀察</strong>：關鍵變數是「下半年漲價能否真的落地」。營收 6 月仍年減 1.63%、累計年減 7.60%，代表漲價尚未反映在數字上；但本益比 74.34 倍已計入相當程度的漲價與 AI 需求預期。美光長約降低了德州二期擴產的資金壓力，屬實質利多，惟股價已自高點回檔逾兩成，短線是「利多兌現後的籌碼消化」還是「預期修正」，要看 Q2 法說會的漲價幅度與 Q3 財測。</li>
+</ul>
+</section><section class="stock" id="3374-精材otc"><header class="stock-head"><span class="symbol">3374</span><span class="name">精材</span><span class="market">otc</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">194.4</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">408.5</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+110.13%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-2.27%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">73.93</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">0.66%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+61.01%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-2,061.1 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 194.4 → 現價 408.5，損益 <strong>+110.13%</strong>；距 3 個月高點 418.0 元回檔僅 <strong>2.27%</strong>（全組合最接近高點）</li>
+<li><strong>估值</strong>：本益比 73.93、殖利率 0.66%、股價淨值比 <strong>10.17</strong>（全組合最高）；每股股利 2.5 元</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>7.64 億元</strong>，月增 +9.64%、年增 <strong>+61.01%</strong>；累計年增 <strong>+32.97%</strong></li>
+<li><strong>籌碼</strong>：外資 <strong>-2,600.1 張</strong>、投信 +2.0 張，三大法人合計 -2,061.1 張</li>
+<li><strong>增資／股本變動</strong>：<strong>無</strong>。查 2026 年度公告，僅有 2/5 董事會通過<strong>資本預算案 14.08 億元</strong>（新廠無塵室擴充、裝機工程與廠務設施，屬自有資金資本支出）、股利分派 2.5 元、以及 2/6（9.867 億元）與 4/24（5.915 億元）兩筆廠務工程採購。未見現金增資、可轉債、私募或減資</li>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>營運結構質變：由過去以 CIS 影像感測器封裝為主，轉向以晶圓測試（CP）為核心。新廠產能開出後月產能達 2024 年的 1.6 倍</li>
+<li>2026 年股東會董事長陳家湘表示新廠裝機進度已超過 60%，預計本季底至最晚 Q3 底完成，整體測試代工產能將較 2025 年底增加約 50%</li>
+<li>產業面：台積電已將 2026 年底 CoWoS 月產能目標由 8 萬片上修至 10～13 萬片；法人估 2026 年約 12 萬片、2027 年 16～17 萬片</li>
+<li>股價 7/1 上漲 7.16% 至 307 元、7/14 收 365.5 元，本月漲勢顯著</li>
+</ul>
+<li><strong>觀察</strong>：基本面（年增 61%、產能 +50%、CoWoS 外溢）與股價走勢一致，但<strong>估值已極高</strong>——股價淨值比 10.17 倍是全組合最貴，殖利率僅 0.66%。同時外資昨日賣超 2,600 張，是全組合外資賣壓第二重。距高點僅 2.27% 意味著沒有安全邊際，這檔目前的風險不在基本面而在評價，關鍵變數是新廠裝機完成後的實際稼動率與測試單價。</li>
+</ul>
+</section><section class="stock" id="6196-帆宣tse"><header class="stock-head"><span class="symbol">6196</span><span class="name">帆宣</span><span class="market">tse</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">357</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">549</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+53.78%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-9.56%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">34.39</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">1.19%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+120.99%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value up">+48.3 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 357 → 現價 549.0，損益 <strong>+53.78%</strong>；距 3 個月高點 607.0 元回檔 <strong>9.56%</strong></li>
+<li><strong>估值</strong>：本益比 34.39、殖利率 1.19%、股價淨值比 6.81</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>75.96 億元</strong>，月增 +8.92%、年增 <strong>+120.99%</strong>（全組合年增第二高）；累計年增 <strong>+39.48%</strong></li>
+<li><strong>籌碼</strong>：外資 +14.2 張、投信 +6.0 張，三大法人合計 +48.3 張（成交極清淡）</li>
+<li><strong>增資／股本變動</strong>：<strong>無</strong>。查 2026 年度公告，資本相關項目僅有 5/5「增加投資子公司 Marketech International Corporation USA 達新台幣 3 億元」與該子公司增加授權資本，屬<strong>子公司層級</strong>，不涉及帆宣本身股本。另有 6/8 現金股利配息基準日、5/29 股東常會修正盈餘分派案。未見現金增資、可轉債、私募或減資</li>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>Q1 財報：營收 143.09 億元（年增 7.9%）、單季 EPS <strong>5.08 元</strong>，同期歷史最佳</li>
+<li>5/20 法說會：截至 3 月底在手訂單約 <strong>1,080 億元</strong>，營運能見度延伸至 2027 年之後；總經理林育業指未來 1～2 年最大挑戰不在爭取訂單，而在「客戶催貨、提前交工」</li>
+<li>業務結構：半導體（IC）營收占比 81%；區域別台灣 45%、中國 18%、美國 17%。在手訂單約 70% 集中於廠務工程與自動化供應系統工程</li>
+<li>管理層明確給出「今年下半年優於上半年」展望；2026 年起美國 Phase Two 工程重啟認列，CoWoS 先進封裝產能與設備正式放量</li>
+</ul>
+<li><strong>觀察</strong>：6 月營收年增 121% 是全組合基本面動能最強的一檔，且千億在手訂單提供了罕見的能見度。關鍵變數是<strong>執行面而非需求面</strong>——訂單已在手，變數在交期、人力與毛利率能否隨規模改善。法人幾乎沒有動作（合計 +48 張），籌碼面無訊號。</li>
+</ul>
+</section><section class="stock" id="5483-中美晶otc-第一批成本-175"><header class="stock-head"><span class="symbol">5483</span><span class="name">中美晶</span><span class="market">otc</span><span class="batch">第一批（成本 175）</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">175</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">238</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+36.00%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-14.85%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">31.32</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">1.59%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+7.61%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-1,329.0 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 175 → 現價 238.0，損益 <strong>+36.00%</strong>；距 3 個月高點 279.5 元回檔 <strong>14.85%</strong></li>
+<li><strong>估值</strong>：本益比 31.32、殖利率 1.59%、股價淨值比 2.74；每股股利 3.5 元（上半年已配 1 元 + 下半年 2.5 元）</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>77.07 億元</strong>，月增 +14.80%、年增 <strong>+7.61%</strong>；累計年增 <strong>+2.26%</strong></li>
+<li><strong>籌碼</strong>：外資 -1,343.8 張、投信 +155.0 張，三大法人合計 -1,329.0 張（該代號合計，非分批）</li>
+<li><strong>增資／股本變動</strong>：<strong>有（授權階段，尚未執行）</strong>。5/26 股東常會通過「因應本公司資金需求，擬辦理<strong>公開募集或私募有價證券案</strong>」；董事會另決議擬於不超過 <strong>50,000 仟股（5,000 萬股）</strong> 內辦理國內現金增資發行普通股及／或現增發行普通股參與發行海外存託憑證（GDR），並得視營運需求辦理私募有價證券。<strong>目前僅為股東會／董事會授權，尚未公告發行價格、股數或時程</strong>。歷史參照：中美晶 2024 年曾執行 GDR，發行 5,500 萬單位、每單位 5.17 美元、折價 5.74%，募資 2.84 億美元</li>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>Q1 法說會（5/11）：毛利率約 23.2%、淨利率約 13.5%、EPS 約 1.83 元，季度呈改善趨勢</li>
+<li>7/21（昨日）公告與聯合再生成立<strong>美國合資公司</strong>，投資上限 1,224 萬美元、持股 51%</li>
+<li>7/13 隨環球晶美光長約利多同步漲停</li>
+<li>再生能源與綠能服務事業成長快速，太陽能模組與屋頂型應用出貨加速；太空應用 PERC 太陽能電池已小量出貨予 2 家美國客戶</li>
+<li>子公司環球晶 12 吋稼動率滿載、中小尺寸稼動率回升，美國德州新廠 2026Q2 進入量產</li>
+</ul>
+<li><strong>觀察</strong>：中美晶本身是控股 + 太陽能／綠能，最大價值來源是持有環球晶股權，因此股價與 6488 高度連動（兩者回檔幅度 14.85% vs 21.56%，中美晶較抗跌）。<strong>這檔目前最需要盯的是增資授權何時轉為實際發行</strong>——若在股價相對高檔執行 GDR，稀釋幅度以 5,000 萬股上限計並不小，會直接影響每股價值。</li>
+</ul>
+</section><section class="stock" id="5483-中美晶otc-第二批成本-215"><header class="stock-head"><span class="symbol">5483</span><span class="name">中美晶</span><span class="market">otc</span><span class="batch">第二批（成本 215）</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">215</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">238</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+10.70%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-14.85%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">31.32</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">1.59%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+7.61%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-1,329.0 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 215 → 現價 238.0，損益 <strong>+10.70%</strong>；回檔幅度同上 <strong>14.85%</strong></li>
+<li><strong>估值／營收／籌碼／增資／事件</strong>：同上（同一檔股票）</li>
+<li><strong>觀察</strong>：這批的成本已接近現價，安全邊際僅約 10%。若增資案以折價方式執行，這批部位會最先受影響。與第一批（+36%）分開看，可清楚顯示第二批進場點位偏高。</li>
+</ul>
+</section><section class="stock" id="2377-微星tse"><header class="stock-head"><span class="symbol">2377</span><span class="name">微星</span><span class="market">tse</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">119</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">151.5</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+27.31%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-1.94%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">15.26</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">2.88%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value down">-9.23%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value up">+2,664.8 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 119 → 現價 151.5，損益 <strong>+27.31%</strong>；距 3 個月高點 154.5 元回檔僅 <strong>1.94%</strong>（全組合最接近高點）</li>
+<li><strong>估值</strong>：本益比 15.26、殖利率 2.88%、股價淨值比 2.25</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>177.56 億元</strong>，月增 +12.39%、年增 <strong>-9.23%</strong>；累計年增 <strong>-7.56%</strong>（全組合唯二累計年減之一）</li>
+<li><strong>籌碼</strong>：外資 +1,483.3 張、投信 +680.0 張，三大法人合計 <strong>+2,664.8 張</strong>（買超第二大）</li>
+<li><strong>增資／股本變動</strong>：<strong>無</strong>。查 2026 年度全部 14 則公告，僅有 5/12「董事會決議通過對荷蘭子公司增資案」（子公司層級）、5/12 代子公司取得孫公司土地、1/30 代子公司自地委建廠辦、3/12 股利分派與股東常會召集、6/11 股東會決議事項。未見現金增資、可轉債、私募、減資或限制員工權利新股</li>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>法說會：董事長徐祥表示今年 AI 伺服器僅占營收 3%～5%，<strong>2026 年有望倍增</strong>，並以未來 3～5 年年增 50%～100% 為目標，動能來自二、三線 CSP 客戶，持續深化與 NVIDIA 合作</li>
+<li>產品策略轉向獲利改善：策略性調漲價格、資源轉向高毛利中高階電競筆電；毛利率預期由 2025 年約 11% 提升至 2026-2027 年約 14%</li>
+<li>AI Server HGX 預計下半年開始量產，RTX Spark 第四季出貨</li>
+<li>2026 年月營收年增率：1 月 +33.73%、2 月 -2.9%、3 月 -11.94%、4 月 -22.26%、5 月 -23.73%、6 月 -9.23%——年減幅度自 5 月起收斂</li>
+</ul>
+<li><strong>觀察</strong>：這是全組合<strong>估值最低（本益比 15.26）但營收年減</strong>的組合。6 月月增 12.39%、年減幅度較 5 月的 -23.73% 明顯收斂，是動能改善的第一個訊號，但尚未轉正。法人昨日買超 2,665 張、股價距高點僅 1.94%，市場顯然在提前押注下半年 AI 伺服器放量。關鍵變數是 HGX 量產與 RTX Spark 出貨能否在 Q3/Q4 把營收年增率拉回正值。</li>
+</ul>
+</section><section class="stock" id="5347-世界先進otc"><header class="stock-head"><span class="symbol">5347</span><span class="name">世界先進</span><span class="market">otc</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">147.5</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">171</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+15.93%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-23.32%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">37.47</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">2.88%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+33.57%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-3,082.9 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 147.5 → 現價 171.0，損益 <strong>+15.93%</strong>；距 3 個月高點 223.0 元回檔 <strong>23.32%</strong>（全組合回檔第二深）</li>
+<li><strong>估值</strong>：本益比 37.47、殖利率 2.88%、股價淨值比 4.24；每股股利 4.474 元</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>59.77 億元</strong>，月增 <strong>+40.89%</strong>（全組合月增最高）、年增 <strong>+33.57%</strong>；累計年增 <strong>+13.23%</strong></li>
+<li><strong>籌碼</strong>：外資 <strong>-4,526.4 張</strong>（全組合外資賣壓最重）、投信 +1,640.7 張（投信買超第二大），三大法人合計 <strong>-3,082.9 張</strong>（賣超最大）</li>
+<li><strong>增資／股本變動</strong>：<strong>有（多項）</strong>。</li>
+</ul>
+<ol>
+<li><strong>限制員工權利新股</strong>：2024/6/14 股東常會通過發行 41,000,000 股（面額 10 元、總額 4.1 億元）；2026/5/4 董事會通過<strong>第三次增資基準日</strong>，2026/5/19 公告第三次實際發行 <strong>12,175,195 股</strong></li>
+<li>2026/5/28 股東常會核准<strong>發行 115 年度限制員工權利新股案</strong>（新一輪）</li>
+<li><strong>海外第一次無擔保轉換公司債</strong>：2026/7/9 因配息調整轉換價，由每股 <strong>189.00 元下調為 184.30 元</strong>。現價 171.0 元仍低於轉換價，屬價外，短期無轉換稀釋壓力</li>
+<li>2026/6/24 子公司 VisionPower 現金增資 US$70,000,000（7,000 萬股）——<strong>子公司層級</strong>，不涉及母公司股本</li>
+<li>2026/6/8 因配息基準日公告公司債停止轉換期間</li>
+</ol>
+<ul>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>Q1 財報：營收 125.32 億元、毛利率 29.3%、EPS 1.18 元</li>
+<li>5/5 法說會：新加坡 12 吋廠（VSMC）擴建順利，產能優化為 4.4 萬片並新增中介層（Interposer）業務後，<strong>資本支出由原規劃降至 67 億美元</strong>，產能已獲客戶長約全數包下，預計 <strong>2027Q1 量產</strong></li>
+<li>AI 伺服器電源管理晶片需求爆發，營收占比預估由低個位數躍升至低雙位數百分比，動能延續至 2027 年</li>
+<li>Q2 產能利用率攀升並成功調漲報價；多家法人於法說後上調全年獲利預估與目標價</li>
+<li>7/17 公告將於 <strong>8/4 召開線上法人說明會</strong></li>
+<li>6 月營收 59.77 億元、5 月 42.42 億元（年增 19.48%），出貨量增帶動年月雙增</li>
+</ul>
+<li><strong>觀察</strong>：基本面（月增 40.9%、年增 33.6%、漲價、VSMC 長約包滿）與籌碼面（法人賣超 3,083 張、外資賣超 4,526 張）<strong>嚴重背離</strong>，且股價已自 223 元回檔 23.32%。投信同時買超 1,641 張，外資與投信方向完全相反。這檔目前的關鍵變數是 <strong>8/4 法說會</strong>——若 Q3 財測與漲價幅度不如市場預期，回檔可能延續；反之目前位置就是外資調節造成的錯價。限制員工權利新股每次增資基準日都會小幅稀釋，屬持續性但幅度可控的股本變動。</li>
+</ul>
+</section><section class="stock" id="8299-群聯otc"><header class="stock-head"><span class="symbol">8299</span><span class="name">群聯</span><span class="market">otc</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">1,980</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">1,965</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value down">-0.76%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-31.77%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">17.74</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">1.25%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+301.00%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value up">+207.0 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 1,980 → 現價 1,965.0，損益 <strong>-0.76%</strong>（跌破成本）；距 3 個月高點 2,880.0 元回檔 <strong>31.77%</strong>（全組合最深）</li>
+<li><strong>估值</strong>：本益比 17.74、殖利率 1.25%、股價淨值比 5.53；每股股利 23.19 元</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>248.53 億元</strong>，月增 +8.87%、年增 <strong>+301.00%</strong>（全組合年增最高）；累計年增 <strong>+243.08%</strong></li>
+<li><strong>籌碼</strong>：外資 +75.2 張、投信 -43.0 張，三大法人合計 +207.0 張（幾乎持平）</li>
+<li><strong>增資／股本變動</strong>：<strong>有（已完成發行）</strong>。2026/4/8 董事會決議發行<strong>海外第一次無擔保可轉換公司債（ECB），上限 8 億美元</strong>，暫定不超過 5 年、票面利率 0%，用途為支應外幣購料資金。5/19 完成定價、<strong>全額募得 8 億美元</strong>：分 A、B 兩券各 4 億美元（A 券新台幣連結／美元交割，B 券純美元計價），皆為零票面利率、5 年期，預定發行日 2026/5/26，於新加坡交易所上市，摩根大通為獨家全球協調人。</li>
+<ul>
+<li><strong>A 券初始轉換價 3,418.75 元</strong>（定價日收盤價溢價 25%）</li>
+<li><strong>B 券初始轉換價 3,555.50 元</strong>（溢價 30%）</li>
+<li>現價 1,965 元僅為 A 券轉換價的 57%，<strong>深度價外，短期無轉換稀釋壓力</strong>；但若股價回升至 3,400 元以上，潛在稀釋才會浮現</li>
+<li>另有 2026/5/8 董事會決議續處分宇瞻科技普通股 3,800 千股、購買苗栗竹南不動產 20.5 億元；4/28 子公司 Power Flash (Samoa) 認購深圳芯展速增資</li>
+</ul>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>Q1 財報：EPS <strong>68.8 元</strong>，季增 212%、年增 1,144%；2026/6/30 除息，配發現金股利 16.964 元</li>
+<li>7/17 收 1,785 元、單日重挫 9.85%，自 5/14 盤中高點 2,880 元波段跌幅一度達 38.02%；今日 1,965 元已自該低點反彈</li>
+<li>以 7/17 收盤價計本益比僅 5.9 倍，但過去四季本益比為 17.0 倍，落差反映市場已將今年獲利高峰打折</li>
+<li>市場敘事轉向：日本鎧俠（Kioxia）股價腰斬，NAND 相關個股正被以「景氣循環高點已到」的劇本重新定價</li>
+</ul>
+<li><strong>觀察</strong>：<strong>這是全組合唯一同時跌破成本、回檔最深、且基本面數字最亮的矛盾標的</strong>。年增 301%、累計年增 243% 是真實數字，本益比 17.74 倍也不算貴——但股價下跌反映的是市場對「NAND 報價高峰持續性」的懷疑，而非對已實現獲利的懷疑。這檔的關鍵變數不是財報，而是 <strong>NAND 合約價的續漲能力</strong>；當市場認定循環見頂，低本益比反而會被解讀為「高峰盈餘」的警訊。8 億美元 ECB 已入袋，短期資金無虞，但也代表公司自己在高檔鎖定了大額低成本資金。</li>
+</ul>
+</section><section class="stock" id="2317-鴻海tse"><header class="stock-head"><span class="symbol">2317</span><span class="name">鴻海</span><span class="market">tse</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">230</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">254</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+10.43%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-19.11%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">17.47</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">2.91%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+52.11%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value up">+26,966.2 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 230 → 現價 254.0，損益 <strong>+10.43%</strong>；距 3 個月高點 314.0 元回檔 <strong>19.11%</strong></li>
+<li><strong>估值</strong>：本益比 17.47、殖利率 2.91%（全組合殖利率第二高）、股價淨值比 <strong>1.94</strong>（全組合最低）</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>8,217.63 億元</strong>，月增 -4.38%、年增 <strong>+52.11%</strong>；累計年增 <strong>+34.99%</strong>（累計 46,428.61 億元，即 4.64 兆元）</li>
+<li><strong>籌碼</strong>：外資 <strong>+22,635.3 張</strong>、投信 +2,099.8 張，三大法人合計 <strong>+26,966.2 張</strong>（全組合買超最大，且量級遠超其他標的）</li>
+<li><strong>增資／股本變動</strong>：<strong>2026 年無新增</strong>。查 2026 年度公告，僅有子公司層級的股權處分與取得（7/17 代子公司 Foxconn (Far East) 處分臻鼎科技 5,544 張、7/15 代子公司鴻揚創投取得 Churchill Capital Corp XI 普通股 90 萬股共 900 萬美元、7/13 代子公司 HCM International 處分 Galaxy Digital 4,337,080 股），未見現金增資、可轉債、私募、減資或限制員工權利新股。</li>
+</ul>
+<p><strong>既有未到期案件</strong>：2024 年 10 月發行的 <strong>7 億美元無擔保可轉換公司債，轉換價每股 300 元</strong>仍在流通。現價 254 元低於轉換價，屬價外，暫無稀釋壓力，但若股價回到 300 元以上需重新評估</p>
+<ul>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>5/14 Q1 法說會：合併營收 2 兆 1,195 億元、年增 29%，歸屬母公司淨利 499 億元，<strong>EPS 3.56 元</strong>（去年同期 3.03 元、年增 17%），營業利益年增 63%，同期歷史最佳</li>
+<li>Q2 展望：AI 機櫃出貨季成長高雙位數、全年出貨倍數以上成長；800G 以上交換機全年成長倍增；<strong>CPO 交換機 Q3 量產出貨</strong></li>
+<li>Q2 合併營收 2.51 兆元、上半年 4.64 兆元，雙創歷史新高</li>
+<li>股價 6 月初衝上 314 元新高後一路回檔，7/17 盤中最低 237 元，波段跌幅近 3 成</li>
+<li>7/2 除息，配發現金股利 7.171 元</li>
+<li><strong>8/12 將公布 Q2 財報並召開法說會</strong>——Q1 雖獲利創高但自由現金流仍為負，這是下一個關鍵驗證點</li>
+</ul>
+<li><strong>觀察</strong>：營收數字（年增 52%、上半年 4.64 兆）與股價走勢（回檔 19%）背離，而昨日法人買超 26,966 張是強烈的分歧訊號——外資在股價回檔近三成後大舉回補。這檔目前最關鍵的變數是 <strong>8/12 法說會的毛利率與自由現金流</strong>：AI 機櫃營收放量已無疑問，市場真正在意的是這門生意賺不賺得到現金。股價淨值比 1.94 倍在全組合最低，估值本身不是風險來源。</li>
+</ul>
+</section><section class="stock" id="3035-智原tse"><header class="stock-head"><span class="symbol">3035</span><span class="name">智原</span><span class="market">tse</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">214.5</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">199</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value down">-7.23%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-18.78%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">103.46</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">0.93%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+26.57%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value up">+747.5 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 214.5 → 現價 199.0，損益 <strong>-7.23%</strong>（跌破成本，全組合虧損最深）；距 3 個月高點 245.0 元回檔 <strong>18.78%</strong></li>
+<li><strong>估值</strong>：本益比 <strong>103.46</strong>（全組合最高）、殖利率 0.93%、股價淨值比 3.71</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>14.17 億元</strong>，月增 <strong>+52.40%</strong>、年增 <strong>+26.57%</strong>；累計年增 <strong>-50.61%</strong>（累計 59.02 億元，全組合累計衰退最深）</li>
+<li><strong>籌碼</strong>：外資 +640.1 張、投信 0 張，三大法人合計 +747.5 張</li>
+<li><strong>增資／股本變動</strong>：<strong>有</strong>。</li>
+</ul>
+<ol>
+<li><strong>2026/3/19 董事會決議發行限制員工權利新股</strong>，不超過普通股 <strong>4,000,000 股</strong>（面額 10 元、總額 4,000 萬元），暫估 116～118 年可能費用化金額約 <strong>5.98 億元</strong>。以現金股利總額 468,990,563 元 ÷ 每股 1.8 元推算流通股數約 2.61 億股，4 百萬股約當<strong>稀釋 1.5%</strong>，幅度有限但費用化金額對每股盈餘有實質影響</li>
+<li>2026/7/10 代重要子公司勝邦投資公司公告董事會決議<strong>盈餘轉增資</strong> 191,831,610 元、發行普通股 19,183,161 股，配發予唯一法人股東智原科技——<strong>子公司層級且智原為 100% 股東，不影響智原本身股本</strong></li>
+<li>5/28 股東常會通過每股配發現金股利 1.8 元，6/16 除息、7/17 發放</li>
+<ul>
+<li>未見現金增資、可轉債、私募或減資</li>
+</ul>
+</ol>
+<ul>
+<li><strong>事件</strong>：</li>
+<ul>
+<li><strong>6 月營收 14.17 億元、月增 52.4%、年增 26.5%，為近 13 個月高點</strong>，且<strong>超越法人共識預估 58.5%</strong>，是單月歷史第五高</li>
+<li>Q2 合併營收 33.13 億元、季增 28%、年減 26.5%，為近四季新高；上半年累計 59.02 億元、年減 50.6%</li>
+<li>累計營收由原本略低於市場預期，轉為<strong>超出法人預估約 8.6%</strong>，法人已啟動 2026 年 EPS 上修</li>
+<li>4/28 法說會：Q1 營收 25.9 億元、季減 8%（優於原預期的季減 10%），<strong>毛利率 47.3%</strong>、季增 5.1 個百分點、年增 27 個百分點，主因今年起無一次性業務干擾、營收回歸 ASIC 產業過往水準</li>
+<li>拿下 5 奈米 ASIC 案件；先進製程有 14 與 12 奈米 AI 新專案及兩個先進封裝專案</li>
+<li>下半年動能：IP 業務將創新高、NRE 持續成長，最大動能來自<strong>先進封裝相關量產營收開始貢獻</strong></li>
+<li>2026 上半年月營收年增率：1 月 -29.79%、2 月 -74.02%、3 月 -69.38%、4 月 -43.12%、5 月 -45.07%、6 月 <strong>+26.57%</strong>——年減幅度逐月收斂並在 6 月轉正</li>
+</ul>
+<li><strong>觀察</strong>：這是全組合<strong>轉折訊號最明確、但估值最貴的一檔</strong>。累計年減 50.6% 是去年同期高基期（一次性量產業務）造成的，6 月營收年增轉正 + 超預期 58.5% 顯示公司說的「Q1 落底、季季高」正在兌現。本益比 103.46 倍是用「已落底的過去四季獲利」除出來的，若下半年先進封裝量產營收如期貢獻，這個倍數會快速下降——但若不如期，103 倍就是實實在在的高估。持股目前 -7.23%，是全組合唯一虧損超過 5% 的部位，關鍵驗證點是 7 月與 8 月營收能否延續年增正成長。</li>
+</ul>
+</section><section class="stock" id="2376-技嘉tse"><header class="stock-head"><span class="symbol">2376</span><span class="name">技嘉</span><span class="market">tse</span></header><div class="tiles"><div class="tile"><div class="tile-label">成本</div><div class="tile-value ">337</div></div><div class="tile"><div class="tile-label">現價</div><div class="tile-value ">345</div></div><div class="tile"><div class="tile-label">損益</div><div class="tile-value up">+2.37%</div></div><div class="tile"><div class="tile-label">距高點</div><div class="tile-value muted-val">-14.18%</div></div><div class="tile"><div class="tile-label">本益比</div><div class="tile-value ">15.93</div></div><div class="tile"><div class="tile-label">殖利率</div><div class="tile-value ">3.52%</div></div><div class="tile"><div class="tile-label">月營收年增</div><div class="tile-value up">+68.55%</div></div><div class="tile"><div class="tile-label">三大法人</div><div class="tile-value down">-170.5 張</div></div></div>
+<ul>
+<li><strong>部位</strong>：成本 337 → 現價 345.0，損益 <strong>+2.37%</strong>（安全邊際最薄的獲利部位）；距 3 個月高點 402.0 元回檔 <strong>14.18%</strong></li>
+<li><strong>估值</strong>：本益比 15.93、殖利率 <strong>3.52%</strong>（全組合最高）、股價淨值比 3.54</li>
+<li><strong>營收</strong>：2026-06 月營收 <strong>428.92 億元</strong>，月增 -12.56%、年增 <strong>+68.55%</strong>；累計年增 <strong>+48.36%</strong>（累計 2,492.69 億元）</li>
+<li><strong>籌碼</strong>：外資 <strong>-1,017.0 張</strong>、投信 +655.0 張，三大法人合計 -170.5 張</li>
+<li><strong>增資／股本變動</strong>：<strong>有（兩項，本組合最需留意）</strong>。</li>
+</ul>
+<ol>
+<li><strong>海外第五次無擔保轉換公司債（ECB）— 已完成發行</strong>：2026/5/19 完成訂價，發行總額 <strong>5 億美元（約新台幣 160 億元）</strong>，固定匯率 1:31.635，<strong>每股轉換價 371.81 元</strong>，以 5/18 收盤價 330.5 元計溢價率 12.5%；發行日 2026/5/26、到期日 2031/5/26（5 年期）。資金用途為因應 AI 伺服器業務海外購料需求（今年產能倍增、資本支出提高至 25～27 億元）。</li>
+</ol>
+<p><strong>潛在稀釋估算</strong>：160 億元 ÷ 371.81 元 ≈ <strong>4,300 萬股</strong>。現價 345 元低於轉換價 371.81 元，目前價外約 7.2%——<strong>距離轉換門檻不遠，是全組合中最接近觸發轉換稀釋的案件</strong></p>
+<ol>
+<li><strong>現金增資發行普通股參與發行海外存託憑證（GDR）— 授權階段</strong>：2026/6/9 股東常會通過「擬規劃辦理現金增資發行普通股參與發行海外存託憑證案」。尚未公告發行股數、價格或時程。歷史參照：技嘉前次 GDR 發行 1,710 萬單位、每單位表彰 2 股共 3,420 萬股、每單位 17.75 美元（每股折合 289.41 元），股權稀釋比例約 <strong>5.11%</strong>，並使當年度現金股利由 6.7 元調降為 6.35794327 元——<strong>若本次 GDR 執行，現金股利同樣會被稀釋調整</strong></li>
+<li>另有代重要子公司技鋼科技公告，為配合子公司技宸股份有限公司股票上櫃計畫，技嘉得辦理對技宸釋股並放棄參與其現金增資</li>
+</ol>
+<ul>
+<li><strong>事件</strong>：</li>
+<ul>
+<li>5/15 法說會：<strong>Q1 營收 1,050 億元、EPS 7.86 元（年增 69%）雙創歷史新高</strong>，毛利率提升至 12.01%，AI 伺服器業務年增 110%</li>
+<li>下半年展望：營收持續攀升、下半年優於上半年；全球伺服器產能積極擴充，預計整體伺服器產能較去年約<strong>倍增</strong></li>
+<li>產品線由雲端 AI 基礎設施（GB300、GIGAPOD）延伸至邊緣 AI 應用（AI TOP）</li>
+<li>法人估 2026 年 EPS 成長 67.8% 至 <strong>30.54 元</strong>，創歷史新高</li>
+<li>2026 年配息 12 元</li>
+</ul>
+<li><strong>觀察</strong>：這檔的基本面（AI 伺服器年增 110%、EPS 創高、本益比僅 15.93）與估值都不是問題，<strong>風險集中在股本面</strong>。ECB 轉換價 371.81 元距現價 345 元僅 7.8%，一旦股價回到 372 元以上，4,300 萬股的轉換稀釋就會啟動；同時 GDR 授權案懸而未決，執行時間點無法預測，且參照前例會連帶下修現金股利（現行 3.52% 殖利率有被稀釋的可能）。持股僅 +2.37%，緩衝極薄。關鍵變數是 GDR 何時、以何價格執行。</li>
+</ul>
+</section><hr>
+<h2 id="風險與觀察清單">風險與觀察清單</h2>
+<h3 id="跌破成本">跌破成本</h3>
+<div class="table-wrap"><table><thead><tr><th class="left">標的</th><th class="right">損益%</th><th class="left">說明</th></tr></thead><tbody><tr><td class="left"><strong>3035 智原</strong></td><td class="right num down"><span class="bar-val"><strong>-7.23%</strong></span><span class="bar-track"><span class="bar-fill down" style="left:0.00%;width:50.00%"></span></span></td><td class="left">全組合虧損最深。累計營收年減 50.6%、本益比 103.46 倍為全組合最高。但 6 月營收年增已轉正（+26.57%）且超預期 58.5%，法人啟動 EPS 上修——轉折訊號已現，需 7、8 月營收確認</td></tr><tr><td class="left"><strong>8299 群聯</strong></td><td class="right num down"><span class="bar-val"><strong>-0.76%</strong></span><span class="bar-track"><span class="bar-fill down" style="left:44.74%;width:5.26%"></span></span></td><td class="left">剛跌破成本。基本面數字全組合最強（年增 301%），但市場正以「NAND 循環見頂」重新定價，7/17 曾單日跌 9.85%</td></tr></tbody></table></div>
+<h3 id="回檔過深自-3-個月高點">回檔過深（自 3 個月高點）</h3>
+<div class="table-wrap"><table><thead><tr><th class="left">標的</th><th class="right">回檔%</th><th class="left">說明</th></tr></thead><tbody><tr><td class="left"><strong>8299 群聯</strong></td><td class="right num"><span class="bar-val"><strong>31.77%</strong></span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:100.00%"></span></span></td><td class="left">自 2,880 元高點；NAND 循環定價風險</td></tr><tr><td class="left"><strong>5347 世界先進</strong></td><td class="right num"><span class="bar-val"><strong>23.32%</strong></span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:73.40%"></span></span></td><td class="left">自 223 元高點；法人賣超 3,083 張且外資賣超 4,526 張為全組合之最，但 6 月營收月增 40.9%，基本面與籌碼嚴重背離</td></tr><tr><td class="left"><strong>6488 環球晶</strong></td><td class="right num"><span class="bar-val"><strong>21.56%</strong></span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:67.86%"></span></span></td><td class="left">自 1,600 元高點；美光長約利多兌現後的回檔，本益比仍達 74.34 倍</td></tr><tr><td class="left"><strong>2317 鴻海</strong></td><td class="right num"><span class="bar-val"><strong>19.11%</strong></span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:60.15%"></span></span></td><td class="left">自 314 元高點；但昨日法人買超 26,966 張為全組合最大，外資明顯回補</td></tr><tr><td class="left"><strong>3035 智原</strong></td><td class="right num"><span class="bar-val"><strong>18.78%</strong></span><span class="bar-track"><span class="bar-fill mag" style="left:0;width:59.11%"></span></span></td><td class="left">自 245 元高點</td></tr></tbody></table></div>
+<h3 id="營收衰退">營收衰退</h3>
+<div class="table-wrap"><table><thead><tr><th class="left">標的</th><th class="right">累計年增%</th><th class="left">說明</th></tr></thead><tbody><tr><td class="left"><strong>3035 智原</strong></td><td class="right num"><strong>-50.61%</strong></td><td class="left">高基期效應；6 月單月已轉正 +26.57%，衰退趨勢正在扭轉</td></tr><tr><td class="left"><strong>6488 環球晶</strong></td><td class="right num"><strong>-7.60%</strong></td><td class="left">6 月單月仍年減 1.63%；下半年漲價尚未反映在營收</td></tr><tr><td class="left"><strong>2377 微星</strong></td><td class="right num"><strong>-7.56%</strong></td><td class="left">6 月年減 9.23%，較 5 月的 -23.73% 明顯收斂，但尚未轉正</td></tr></tbody></table></div>
+<h3 id="法人賣超">法人賣超</h3>
+<div class="table-wrap"><table><thead><tr><th class="left">標的</th><th class="right">三大法人(張)</th><th class="right">外資(張)</th><th class="left">說明</th></tr></thead><tbody><tr><td class="left"><strong>5347 世界先進</strong></td><td class="right num">-3,082.9</td><td class="right num"><strong>-4,526.4</strong></td><td class="left">賣壓最重；投信卻買超 1,640.7 張，方向相反</td></tr><tr><td class="left"><strong>3374 精材</strong></td><td class="right num">-2,061.1</td><td class="right num">-2,600.1</td><td class="left">股價距高點僅 2.27%，外資在高檔調節</td></tr><tr><td class="left"><strong>5483 中美晶</strong></td><td class="right num">-1,329.0</td><td class="right num">-1,343.8</td><td class="left"></td></tr><tr><td class="left"><strong>6488 環球晶</strong></td><td class="right num">-1,038.5</td><td class="right num">-1,151.2</td><td class="left">投信同步賣超 73.7 張</td></tr></tbody></table></div>
+<h3 id="股本變動-稀釋風險本日查證重點">股本變動／稀釋風險（本日查證重點）</h3>
+<div class="table-wrap"><table><thead><tr><th class="left">標的</th><th class="left">狀態</th><th class="left">案件</th><th class="left">稀釋評估</th></tr></thead><tbody><tr><td class="left"><strong>2376 技嘉</strong></td><td class="left"><span class="pill critical">🔴 <strong>已發行 + 授權中</strong></span></td><td class="left">①ECB 5 億美元（2026/5/26 發行，轉換價 <strong>371.81 元</strong>，2031 到期）②GDR 現增案（2026/6/9 股東會通過授權）</td><td class="left">ECB 潛在稀釋約 <strong>4,300 萬股</strong>，現價 345 元距轉換價僅 <strong>7.8%</strong>，是全組合最接近觸發的案件；GDR 前例稀釋 5.11% 並連帶下修現金股利</td></tr><tr><td class="left"><strong>8299 群聯</strong></td><td class="left"><span class="pill critical">🔴 <strong>已發行</strong></span></td><td class="left">ECB 8 億美元（2026/5/26 發行，A 券轉換價 3,418.75 元／B 券 3,555.50 元，0% 票息，5 年期，新交所掛牌）</td><td class="left">現價 1,965 元僅為 A 券轉換價 57%，<strong>深度價外</strong>，短期無稀釋壓力</td></tr><tr><td class="left"><strong>5347 世界先進</strong></td><td class="left"><span class="pill warning">🟡 <strong>持續進行中</strong></span></td><td class="left">①限制員工權利新股：第三次增資基準日 2026/5/19 實際發行 <strong>12,175,195 股</strong>；2026/5/28 股東會再核准 115 年度新一輪 ②海外第一次 ECB 轉換價 2026/7/9 由 189.00 元下調至 <strong>184.30 元</strong></td><td class="left">限制員工新股為持續性小幅稀釋；ECB 現價 171 元仍價外約 7.2%</td></tr><tr><td class="left"><strong>3035 智原</strong></td><td class="left"><span class="pill warning">🟡 <strong>已決議</strong></span></td><td class="left">2026/3/19 董事會決議發行限制員工權利新股 <strong>不超過 4,000,000 股</strong>，暫估 116-118 年費用化約 <strong>5.98 億元</strong></td><td class="left">股數稀釋約 <strong>1.5%</strong>（推算流通股數約 2.61 億股），幅度有限，但費用化金額直接壓縮未來三年 EPS</td></tr><tr><td class="left"><strong>5483 中美晶</strong></td><td class="left"><span class="pill warning">🟡 <strong>授權未執行</strong></span></td><td class="left">2026/5/26 股東會通過「公開募集或私募有價證券案」；董事會授權不超過 <strong>50,000 仟股</strong>辦理國內現增及／或 GDR，並得辦理私募</td><td class="left"><strong>尚未公告任何發行條件</strong>。若以上限 5,000 萬股執行，稀釋幅度不小。前次（2024）GDR 折價 5.74% 發行 5,500 萬單位。<strong>須持續追蹤</strong></td></tr><tr><td class="left"><strong>2317 鴻海</strong></td><td class="left"><span class="pill good">🟢 <strong>無新增（有既存案件）</strong></span></td><td class="left">2024/10 發行 7 億美元 ECB，轉換價 <strong>300 元</strong>，仍在流通</td><td class="left">現價 254 元價外約 15%，暫無壓力</td></tr><tr><td class="left"><strong>6488 環球晶</strong></td><td class="left"><span class="pill good">🟢 <strong>無</strong></span></td><td class="left">2026 年度公告查無任何股本變動案。美光 5 億美元經查證屬<strong>預付款性質，非股權投資</strong></td><td class="left">無</td></tr><tr><td class="left"><strong>3374 精材</strong></td><td class="left"><span class="pill good">🟢 <strong>無</strong></span></td><td class="left">2026 年度僅有資本預算案 14.08 億元（自有資金資本支出）與廠務工程採購</td><td class="left">無</td></tr><tr><td class="left"><strong>6196 帆宣</strong></td><td class="left"><span class="pill good">🟢 <strong>無</strong></span></td><td class="left">僅子公司 Marketech USA 增資 3 億元（子公司層級）</td><td class="left">無</td></tr><tr><td class="left"><strong>2377 微星</strong></td><td class="left"><span class="pill good">🟢 <strong>無</strong></span></td><td class="left">2026 年度 14 則公告全數查核，僅有荷蘭子公司增資（子公司層級）</td><td class="left">無</td></tr></tbody></table></div>
+<h3 id="其他觀察">其他觀察</h3>
+<ul>
+<li><strong>5483 中美晶第二批（成本 215）</strong>：損益僅 +10.70%，若中美晶執行折價增資，這批部位緩衝最薄。</li>
+<li><strong>2376 技嘉（成本 337）</strong>：損益僅 +2.37%，同時面臨 ECB 轉換與 GDR 兩項稀釋變數，是全組合「基本面最好但股本風險最高」的組合。</li>
+<li><strong>待驗證時程</strong>：世界先進 8/4 法說會、鴻海 8/12 Q2 財報與法說會、環球晶 2026Q2 英文線上法說會（7/20 公告）。</li>
+</ul>
+<hr>
+<h2 id="資料缺漏與註記">資料缺漏與註記</h2>
+<ul>
+<li><strong><code>announcements</code> 區塊為空</strong>：資料來源僅提供最新一個交易日的重大訊息，封存需逐日累積，剛啟用時為空。本報告 10 檔的股本變動狀態<strong>全部改以公開資訊逐檔查證</strong>（Yahoo 股市個股公告頁 + 公開新聞），非依賴該欄位。</li>
+<li><strong>整體加權損益無法計算</strong>：<code>portfolio</code> 未提供各批持股股數／金額，僅能提供算術平均（+35.17%）作為粗略參考。</li>
+<li><strong>盤中資料</strong>：現價為 10:12 即時價，非收盤價；估值與法人資料為 2026-07-21 收盤後數據。</li>
+<li><strong>6488 今日振幅偏大</strong>（1,205.0～1,295.0，約 7.5%），10:12 時點報 1,255.0，日內方向尚未確定。</li>
+<li><strong>無 <code>error</code> 欄位異常</strong>：11 列 portfolio 資料的 <code>error</code> 皆為 null，所有標的估值、營收、籌碼資料齊備，無缺值。</li>
+</ul>
+<hr>
+<p>資料來源：Google 試算表（成本）、證交所 MIS（即時報價）、Yahoo Finance（回看高點）、<br>TWSE/TPEX OpenAPI（估值、營收、籌碼、重大訊息）、公開新聞與各公司公開資訊觀測站公告。<br>本報告為個人持股追蹤紀錄，非投資建議。</p>
+<div class="footer">本頁為<strong>個人技術測試用途</strong>，內容由程式自動抓取公開資料後產生，可能有錯誤、遺漏或延遲，且未經人工查核。所有數字僅供參考，<strong>不構成任何投資建議、要約或推薦</strong>。任何人依本頁內容所為之投資決策及其後果，均由行為人自行承擔，作者不負任何形式之法律責任。<br><br>
+由 <code>scripts/render_html.py</code> 自 <code>2026-07-22.md</code> 自動產生。</div>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, KEY='report-theme';
+  var saved=null;
+  try{saved=localStorage.getItem(KEY)}catch(e){}
+  if(saved){root.setAttribute('data-theme',saved)}
+  var btn=document.getElementById('theme');
+  if(!btn)return;
+  function label(){
+    var dark=root.getAttribute('data-theme')==='dark'||
+      (!root.getAttribute('data-theme')&&
+       matchMedia('(prefers-color-scheme:dark)').matches);
+    btn.textContent=dark?'☀ 淺色':'☾ 深色';
+  }
+  label();
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||
+      (!root.getAttribute('data-theme')&&
+       matchMedia('(prefers-color-scheme:dark)').matches);
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem(KEY,next)}catch(e){}
+    label();
+  });
+})();
+</script>
+</body>
+</html>

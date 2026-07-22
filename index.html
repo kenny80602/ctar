@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>投資組合日報</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  color-scheme:light;
+  --plane:#f9f9f7; --surface:#fcfcfb;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --rule:#e1e0d9; --border:rgba(11,11,11,.10);
+  --up:#d03b3b; --down:#0ca30c; --mag:#2a78d6;
+  --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+  --track:#eceae4;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme=light])){
+    color-scheme:dark;
+    --plane:#0d0d0d; --surface:#1a1a19;
+    --ink:#fff; --ink-2:#c3c2b7; --muted:#898781;
+    --rule:#2c2c2a; --border:rgba(255,255,255,.10);
+    --up:#e66767; --down:#0ca30c; --mag:#3987e5;
+    --track:#2c2c2a;
+  }
+}
+:root[data-theme=dark]{
+  color-scheme:dark;
+  --plane:#0d0d0d; --surface:#1a1a19;
+  --ink:#fff; --ink-2:#c3c2b7; --muted:#898781;
+  --rule:#2c2c2a; --border:rgba(255,255,255,.10);
+  --up:#e66767; --down:#0ca30c; --mag:#3987e5;
+  --track:#2c2c2a;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--plane); color:var(--ink);
+  font:400 16px/1.75 system-ui,-apple-system,"PingFang TC","Noto Sans TC",sans-serif;
+  overflow-wrap:break-word;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 96px}
+
+/* 頂欄 */
+.topbar{
+  position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--plane) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--rule);
+}
+.topbar-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;
+  align-items:center;gap:12px;flex-wrap:wrap}
+.topbar strong{font-size:15px;font-weight:600;letter-spacing:.01em}
+.topbar .date{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.theme-btn{margin-left:auto;border:1px solid var(--border);background:var(--surface);
+  color:var(--ink-2);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer;
+  font-family:inherit}
+.theme-btn:hover{color:var(--ink)}
+
+h1{font-size:29px;line-height:1.3;font-weight:650;letter-spacing:-.01em;margin:40px 0 8px}
+h2{font-size:21px;font-weight:650;margin:56px 0 18px;padding-bottom:9px;
+  border-bottom:1px solid var(--rule);scroll-margin-top:70px}
+h3{font-size:17px;font-weight:600;margin:32px 0 12px}
+p{margin:14px 0;color:var(--ink-2)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--mag)}
+hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+code{font:500 .87em/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:var(--track);padding:2px 5px;border-radius:4px;color:var(--ink)}
+blockquote{margin:20px 0;padding:14px 18px;background:var(--surface);
+  border:1px solid var(--border);border-left:3px solid var(--mag);
+  border-radius:0 8px 8px 0;color:var(--ink-2);font-size:14px;line-height:1.7}
+ul,ol{margin:14px 0;padding-left:1.35em;color:var(--ink-2)}
+li{margin:7px 0}
+li::marker{color:var(--muted)}
+ul ul{margin:7px 0}
+
+/* 導覽 */
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 8px}
+.nav a{font-size:13px;text-decoration:none;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--border);border-radius:999px;padding:5px 13px}
+.nav a:hover{color:var(--ink);border-color:var(--muted)}
+
+/* 概況 */
+.summary{margin:26px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat-label{font-size:12px;color:var(--muted);margin-bottom:5px}
+.stat-value{font-size:25px;font-weight:600;line-height:1.2}
+.summary-note{font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+.summary-note strong{color:var(--ink-2)}
+
+/* 個股卡 */
+.stock{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px 22px;margin:22px 0;scroll-margin-top:70px}
+.stock-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.stock-head .symbol{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);background:var(--track);border-radius:6px;padding:3px 8px}
+.stock-head .name{font-size:19px;font-weight:650}
+.stock-head .market{font-size:11px;color:var(--muted);border:1px solid var(--border);
+  border-radius:4px;padding:1px 6px;text-transform:uppercase;letter-spacing:.04em}
+.stock-head .batch{font-size:13px;color:var(--muted)}
+.stock>ul{margin-top:4px}
+.stock>ul>li{margin:11px 0}
+
+/* flex 而非 grid：格數（8）除不盡欄數時，grid 會在末列留下空儲存格，
+   而空儲存格會露出容器底色變成一塊色塊。flex 的末列則自動撐滿。 */
+.tiles{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+/* max-width 防止落單的格子被拉成整列寬；剩餘空間留白即可，不會像 grid 那樣露出色塊 */
+.tile{flex:1 1 88px;max-width:190px;background:var(--plane);
+  border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.tile-label{font-size:11.5px;color:var(--muted);white-space:nowrap;margin-bottom:3px}
+.tile-value{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+.up{color:var(--up)} .down{color:var(--down)}
+.muted-val{color:var(--ink-2)} .warn-val{color:var(--warning)}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--border);
+  border-radius:12px;background:var(--surface);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:max-content}
+th,td{padding:10px 14px;text-align:left;vertical-align:top;
+  border-bottom:1px solid var(--rule)}
+th{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;
+  background:var(--surface);position:sticky;top:0;z-index:1}
+/* 橫向捲動時保留識別欄——手機上捲到損益欄時仍看得到是哪一檔 */
+td:first-child,th:first-child{position:sticky;left:0;background:var(--surface);
+  z-index:2;box-shadow:1px 0 0 var(--rule)}
+th:first-child{z-index:3}
+tbody tr:last-child td{border-bottom:0}
+td{color:var(--ink-2)}
+td strong{color:var(--ink)}
+.right{text-align:right}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num.up strong,td.num.up{color:var(--up)}
+td.num.down strong,td.num.down{color:var(--down)}
+.bar-val{display:block}
+.bar-track{display:block;position:relative;height:5px;margin-top:5px;
+  min-width:78px;background:var(--track);border-radius:3px;overflow:hidden}
+.bar-fill{position:absolute;top:0;height:100%}
+.bar-fill.up{background:var(--up);border-radius:0 3px 3px 0}
+.bar-fill.down{background:var(--down);border-radius:3px 0 0 3px}
+.bar-fill.mag{background:var(--mag);border-radius:0 3px 3px 0}
+
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12.5px;
+  border:1px solid var(--border);white-space:nowrap}
+.pill.critical{background:color-mix(in srgb,var(--critical) 12%,transparent);color:var(--ink)}
+.pill.warning{background:color-mix(in srgb,var(--warning) 16%,transparent);color:var(--ink)}
+.pill.good{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--ink)}
+
+.footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);
+  font-size:12.5px;color:var(--muted);line-height:1.8}
+
+/* 免責聲明。公開站點，必須在第一屏就看得到，不能只藏在頁尾 */
+.disclaimer{margin:22px 0 0;padding:13px 16px;border-radius:10px;
+  background:color-mix(in srgb,var(--warning) 10%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--warning) 38%,transparent);
+  font-size:13px;line-height:1.7;color:var(--ink-2)}
+.disclaimer strong{color:var(--ink)}
+.disclaimer .dtag{display:inline-block;font-weight:600;color:var(--ink);
+  margin-right:6px}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  .wrap{padding:0 15px 72px}
+  h1{font-size:24px;margin-top:28px} h2{font-size:19px;margin-top:42px}
+  .stock{padding:16px;border-radius:12px}
+  .stat-value{font-size:22px}
+  .table-wrap{border-radius:10px}
+  th,td{padding:9px 11px}
+}
+@media print{
+  .topbar,.nav,.theme-btn{display:none}
+  body{background:#fff;font-size:11pt}
+  .stock,.stat,.table-wrap{break-inside:avoid}
+  .wrap{max-width:none;padding:0}
+}
+
+.idx{list-style:none;padding:0;margin:24px 0 0}
+.idx li{margin:0 0 8px}
+.idx a{display:flex;align-items:baseline;gap:12px;text-decoration:none;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:14px 18px;color:var(--ink)}
+.idx a:hover{border-color:var(--muted)}
+.idx .d{font-variant-numeric:tabular-nums;font-weight:600;font-size:16px}
+.idx .w{color:var(--muted);font-size:13px}
+.idx .latest{margin-left:auto;font-size:11.5px;color:var(--ink-2);
+  border:1px solid var(--border);border-radius:999px;padding:2px 9px}
+.empty{color:var(--muted);margin:24px 0}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+<strong>投資組合日報</strong>
+<button class="theme-btn" id="theme" type="button">☾ 深色</button>
+</div></div>
+<div class="wrap">
+<h1 style="margin-bottom:4px">投資組合日報</h1>
+<p style="margin-top:0">每日自動產生的個人持股追蹤紀錄。</p>
+<p class="disclaimer"><span class="dtag">⚠ 免責聲明</span>本頁為<strong>個人技術測試用途</strong>，內容由程式自動抓取公開資料後產生，可能有錯誤、遺漏或延遲，且未經人工查核。所有數字僅供參考，<strong>不構成任何投資建議、要約或推薦</strong>。任何人依本頁內容所為之投資決策及其後果，均由行為人自行承擔，作者不負任何形式之法律責任。</p>
+<ul class="idx"><li><a href="reports/2026-07-22.html"><span class="d">2026-07-22</span><span class="w">週三</span><span class="latest">最新</span></a></li></ul>
+<div class="footer">共 1 份報告。</div>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, KEY='report-theme';
+  var saved=null;
+  try{saved=localStorage.getItem(KEY)}catch(e){}
+  if(saved){root.setAttribute('data-theme',saved)}
+  var btn=document.getElementById('theme');
+  if(!btn)return;
+  function label(){
+    var dark=root.getAttribute('data-theme')==='dark'||
+      (!root.getAttribute('data-theme')&&
+       matchMedia('(prefers-color-scheme:dark)').matches);
+    btn.textContent=dark?'☀ 淺色':'☾ 深色';
+  }
+  label();
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||
+      (!root.getAttribute('data-theme')&&
+       matchMedia('(prefers-color-scheme:dark)').matches);
+    var next=dark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem(KEY,next)}catch(e){}
+    label();
+  });
+})();
+</script>
+</body>
+</html>
